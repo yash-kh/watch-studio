@@ -1,0 +1,73 @@
+.gallery-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.gallery {
+  display: flex;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  position: relative;
+  z-index: 1;
+}
+
+.cards {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding-left: calc(50vw - 7rem);
+  padding-right: calc(50vw - 7rem);
+}
+
+.cards li {
+  list-style: none;
+  margin: 0;
+  width: 310px;
+  height: 450px;
+  text-align: center;
+  line-height: 18rem;
+  font-size: 2rem;
+  position: relative;
+  border-radius: 0.8rem;
+  scroll-snap-align: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.cards li img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  height: 100%;
+  max-width: unset;
+}
+
+.static-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.static-item img {
+  max-width: unset;
+}
+
+.gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

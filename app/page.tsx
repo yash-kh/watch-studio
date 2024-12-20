@@ -1,101 +1,121 @@
-import Image from "next/image";
+"use client";
+
+import WatchCarousel from "@/components/WatchCarousel/WatchCarousel";
+import { watchItem } from "@/modals/watch";
+import { useState } from "react";
+
+const bands = [
+  {
+    type: "Stainless Steel",
+    name: "SS 1",
+    price: 100,
+    imageUrl: "/strap/ss_1.jpeg",
+  },
+  {
+    type: "Stainless Steel",
+    name: "SS 2",
+    price: 200,
+    imageUrl: "/strap/ss_2.jpeg",
+  },
+  {
+    type: "Sport Loop",
+    name: "SL 1",
+    price: 100,
+    imageUrl: "/strap/sl_1.jpeg",
+  },
+  {
+    type: "Sport Loop",
+    name: "SL 2",
+    price: 200,
+    imageUrl: "/strap/sl_2.jpeg",
+  },
+  {
+    type: "Sport Band",
+    name: "SB 1",
+    price: 100,
+    imageUrl: "/strap/sb_1.jpeg",
+  },
+  {
+    type: "Sport Band",
+    name: "SB 2",
+    price: 200,
+    imageUrl: "/strap/sb_2.jpeg",
+  },
+  {
+    type: "Nike Sport Loop",
+    name: "NSL 1",
+    price: 100,
+    imageUrl: "/strap/NSL_1.jpeg",
+  },
+  {
+    type: "Nike Sport Loop",
+    name: "NSL 2",
+    price: 200,
+    imageUrl: "/strap/NSL_2.jpeg",
+  },
+];
+
+const cases = [
+  {
+    type: "Aluminum",
+    name: "A 1",
+    price: 100,
+    imageUrl: "/case/wf_a_1.png",
+  },
+  {
+    type: "Aluminum",
+    name: "A 2",
+    price: 200,
+    imageUrl: "/case/wf_a_2.png",
+  },
+  {
+    type: "Titanium",
+    name: "T 1",
+    price: 100,
+    imageUrl: "/case/wf_t_1.png",
+  },
+  {
+    type: "Titanium",
+    name: "T 2",
+    price: 200,
+    imageUrl: "/case/wf_t_2.png",
+  },
+];
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [view, setView] = useState<string>("bands");
+  const [selectedCase, setSelectedCase] = useState<watchItem | null>(null);
+  const [selectedBand, setSelectedBand] = useState<watchItem | null>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+  return (
+    <main>
+      <div className="h-[110px]"></div>
+      {view === "bands" && (
+        <>
+          <WatchCarousel
+            items={bands}
+            staticItem={selectedCase || cases[0]}
+            staticInFront={true}
+            onSelect={setSelectedBand}
+            initialSelectedItem={selectedBand || undefined}
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+          {selectedBand && <p>{selectedBand.name}</p>}
+        </>
+      )}
+      {view === "cases" && (
+        <>
+          <WatchCarousel
+            items={cases}
+            staticItem={selectedBand || bands[0]}
+            staticInFront={false}
+            onSelect={setSelectedCase}
+            initialSelectedItem={selectedCase || undefined}
           />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          {selectedCase && <p>{selectedCase.name}</p>}
+        </>
+      )}
+      <button onClick={() => setView("cases")}>Cases</button>
+      <button onClick={() => setView("bands")}>Bands</button>
+    </main>
   );
 }
