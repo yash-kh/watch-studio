@@ -46,8 +46,20 @@ export default function Home() {
   function setSeries(name: string) {
     const s = series.find((s) => s.name === name);
     if (s) {
+      setView("a");
+      setTimeout(() => setView("home"), 500);
       setSelectedSeries(s);
       selectSize(s.sizes[1] || s.sizes[0]);
+      const size = s.sizes[1] || s.sizes[0];
+      const band = size.bands[0];
+      const casee = size.cases[0];
+      setWatchList([
+        {
+          case: casee,
+          band: band,
+          size: size,
+        },
+      ]);
     }
   }
 
