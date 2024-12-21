@@ -26,14 +26,14 @@ const Dropdown: React.FC<DropdownProps> = ({ options, onSelect }) => {
 
       <span className="relative z-50">
         <button
-          className="px-4 py-2 typography-body"
+          className="px-4 py-4 typography-body"
           onClick={() => setIsOpen((prev) => !prev)}
         >
           Collections <i className="fa-solid fa-angle-down fa-xs"></i>
         </button>
 
         {isOpen && (
-          <ul className="absolute left-[-90px] bg-white border rounded-xl shadow-lg w-[320px] px-[26px]">
+          <ul className="absolute left-[-5.625rem] bg-white border rounded-xl shadow-lg w-[20rem] px-[1.625rem]">
             {options.map((option, index) => (
               <li
                 key={index}
