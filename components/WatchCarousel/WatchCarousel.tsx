@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import "./WatchCarousel.css";
 import Image from "next/image";
 import { watchItem } from "@/modals/watch";
-import { motion } from "framer-motion";
 
 type Item = watchItem;
 
@@ -139,12 +138,7 @@ const WatchCarousel: React.FC<WatchCarouselProps> = ({
   };
 
   return (
-    <motion.div
-      className="gallery-wrapper"
-      initial={{ opacity: 0, backgroundColor: "white" }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-    >
+    <div className="gallery-wrapper">
       <div className="gallery" ref={galleryRef}>
         <ul className="cards">
           {items.map((item, i) => (
@@ -192,7 +186,7 @@ const WatchCarousel: React.FC<WatchCarouselProps> = ({
           <p>Snapped card: {currentCard}</p>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

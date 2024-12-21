@@ -14,3 +14,87 @@
     line-height: 1.4705882353;
     -webkit-font-smoothing: antialiased;
 }
+
+.button {
+    --sk-button-color: #fff;
+    --sk-button-border-color: #0000;
+    --sk-button-border-radius: 980px;
+    --sk-button-margin-horizontal: 14px;
+    --sk-button-margin-vertical: 14px;
+    --sk-button-min-width-basis: 60px;
+    --sk-button-padding-horizontal: 16px;
+    --sk-button-padding-vertical: 9px;
+    --sk-button-border-width: 1px;
+    --sk-button-box-sizing: content-box;
+    --sk-button-width: auto;
+    --sk-button-display: inline-block;
+    border-style: solid;
+    cursor: pointer;
+    font-family: SF Pro Text, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: -.016em;
+    line-height: 1.2857742857;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    --sk-button-background: #0071e3;
+    --sk-button-background-hover: #0076df;
+    --sk-button-background-active: #006edb;
+}
+
+.rf-designstudio-productcollection {
+    color: #6e6e73;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.typography-caption {
+    font-family: SF Pro Text, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: -.01em;
+    line-height: 1.3333733333;
+}
+
+.rf-designstudio-producttitle {
+    color: #1d1d1f;
+    display: -webkit-box;
+    font-weight: 600;
+    margin-bottom: 5px;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.typography-body-reduced {
+    font-family: SF Pro Text, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: -.016em;
+    line-height: 1.4285914286;
+}
+
+.rf-designstudio-producttitle {
+    color: #1d1d1f;
+    display: -webkit-box;
+    font-weight: 600;
+    margin-bottom: 5px;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.button-elevated {
+    --sk-button-padding-horizontal: 22px;
+    --sk-button-padding-vertical: 12px;
+    --sk-button-min-width-basis: 70px;
+    --sk-button-margin-horizontal: 18px;
+    --sk-button-margin-vertical: 18px;
+    font-family: SF Pro Text,SF Pro Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: -.022em;
+    line-height: 1.1764805882;
+}

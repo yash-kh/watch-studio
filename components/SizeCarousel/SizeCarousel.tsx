@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import "./SizeCarousel.css";
 import Image from "next/image";
 import { watchItem, watchSize, watch } from "@/modals/watch";
-import { motion } from "framer-motion";
 
 type CardElement = HTMLLIElement | null;
 type GalleryElement = HTMLDivElement | null;
@@ -201,12 +200,7 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
   };
 
   return (
-    <motion.div
-      className="gallery-wrapper"
-      initial={{ opacity: 0, backgroundColor: "white" }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-    >
+    <div className="gallery-wrapper">
       <div className="gallery" ref={galleryRef}>
         <ul className="cards">
           {watches.map((item, i) => (
@@ -246,7 +240,7 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
           <p>Snapped card: {currentCard}</p>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
