@@ -152,37 +152,39 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="flex gap-4 justify-center mt-16">
-        <span onClick={() => setView("Size")}>
-          <ButtonList
-            items={
-              view !== "Size"
-                ? ["Size"]
-                : selectedSeries.sizes.map((s) => s.name)
-            }
-            heightLightItem={selectedSize.name}
-          ></ButtonList>
-        </span>
-        <span onClick={() => setView("Case")}>
-          <ButtonList
-            items={
-              view !== "Case"
-                ? ["Case"]
-                : [...new Set(cases.map((c) => c.type))]
-            }
-            heightLightItem={selectedCase.type}
-          ></ButtonList>
-        </span>
-        <span onClick={() => setView("Band")}>
-          <ButtonList
-            items={
-              view !== "Band"
-                ? ["Band"]
-                : [...new Set(bands.map((b) => b.type))]
-            }
-            heightLightItem={selectedBand.type}
-          ></ButtonList>
-        </span>
+      <div className="flex justify-center">
+        <div className="flex gap-4 my-16 overflow-x-auto max-w-full hide-scroll-bar">
+          <span onClick={() => setView("Size")}>
+            <ButtonList
+              items={
+                view !== "Size"
+                  ? ["Size"]
+                  : selectedSeries.sizes.map((s) => s.name)
+              }
+              heightLightItem={selectedSize.name}
+            ></ButtonList>
+          </span>
+          <span onClick={() => setView("Case")}>
+            <ButtonList
+              items={
+                view !== "Case"
+                  ? ["Case"]
+                  : [...new Set(cases.map((c) => c.type))]
+              }
+              heightLightItem={selectedCase.type}
+            ></ButtonList>
+          </span>
+          <span onClick={() => setView("Band")}>
+            <ButtonList
+              items={
+                view !== "Band"
+                  ? ["Band"]
+                  : [...new Set(bands.map((b) => b.type))]
+              }
+              heightLightItem={selectedBand.type}
+            ></ButtonList>
+          </span>
+        </div>
       </div>
     </main>
   );

@@ -139,7 +139,7 @@ const WatchCarousel: React.FC<WatchCarouselProps> = ({
 
   return (
     <div className="gallery-wrapper">
-      <div className="gallery" ref={galleryRef}>
+      <div className="gallery hide-scroll-bar" ref={galleryRef}>
         <ul className="cards">
           {items.map((item, i) => (
             <li

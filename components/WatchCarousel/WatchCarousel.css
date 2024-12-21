@@ -64,11 +64,11 @@
   max-width: unset;
 }
 
-.gallery::-webkit-scrollbar {
+.hide-scroll-bar::-webkit-scrollbar {
   display: none;
 }
 
-.gallery {
+.hide-scroll-bar {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }

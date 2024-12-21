@@ -201,7 +201,7 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
 
   return (
     <div className="gallery-wrapper">
-      <div className="gallery" ref={galleryRef}>
+      <div className="gallery hide-scroll-bar" ref={galleryRef}>
         <ul className="cards">
           {watches.map((item, i) => (
             <li
