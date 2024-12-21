@@ -10,64 +10,19 @@ type CardElement = HTMLLIElement | null;
 type GalleryElement = HTMLDivElement | null;
 
 interface SizeCarouselProps {
-  sizes: watchSize[];
+  watches: watch[];
   selectedSize: watchSize;
-  selectedCase: watchItem;
-  selectedBand: watchItem;
   onSelect: (size: watchSize, band?: watchItem, caze?: watchItem) => void;
 }
 
 const SizeCarousel: React.FC<SizeCarouselProps> = ({
-  sizes,
+  watches,
   selectedSize,
-  selectedCase,
-  selectedBand,
   onSelect,
 }) => {
   const cardsRef = useRef<CardElement[]>([]);
   const galleryRef = useRef<GalleryElement>(null);
   const [currentCard, setCurrentCard] = useState<number>(0);
-  const [watches, setWatches] = useState<watch[]>([]);
-
-  useEffect(() => {
-    const watches: watch[] = [];
-    const bandName = removeLeadingNumbers(selectedBand.name);
-    const caseName = removeLeadingNumbers(selectedCase.name);
-    sizes.forEach((size) => {
-      const band = size.bands.find(
-        (b) => removeLeadingNumbers(b.name) === bandName
-      );
-      const casze = size.cases.find(
-        (c) => removeLeadingNumbers(c.name) === caseName
-      );
-      if (band && casze) {
-        watches.push({ case: casze, band: band, size: size });
-      }
-    });
-    setWatches(watches);
-    let initialIndex = -1;
-    for (let i = 0; i < watches.length; i++) {
-      if (
-        watches[i].case.name === selectedCase.name &&
-        watches[i].band.name === selectedBand.name &&
-        watches[i].size.name === selectedSize.name
-      ) {
-        initialIndex = i;
-        break;
-      }
-    }
-    if (initialIndex !== -1) {
-      setCurrentCard(initialIndex);
-      setTimeout(() => {
-        handleCardClick(initialIndex);
-      }, 1);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  function removeLeadingNumbers(input: string): string {
-    return input.replace(/^\d+/, "");
-  }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleScroll = useCallback(
@@ -111,35 +66,13 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
     }
   };
 
-  // useEffect(() => {
-  //   const index = watches.findIndex(
-  //     (watch) => watch.size.name === selectedSize.name
-  //   );
-  //   console.log(index);
-  //   if (index !== -1) {
-  //     if (galleryRef.current) {
-  //     const initialCard = cardsRef.current[index];
-  //     if (initialCard) {
-  //       const centerOffset =
-  //         initialCard.offsetLeft -
-  //         galleryRef.current.clientWidth / 2 +
-  //         initialCard.offsetWidth / 2;
-  //       galleryRef.current.scrollTo({
-  //         left: centerOffset,
-  //         behavior: "smooth",
-  //       });
-  //     }
-  //   }
-  //   }
-  // }, [selectedSize]);
-
   useEffect(() => {
     if (galleryRef.current) {
       let initialIndex = -1;
       for (let i = 0; i < watches.length; i++) {
         if (
-          watches[i].case.name === selectedCase.name &&
-          watches[i].band.name === selectedBand.name &&
+          watches[i].case.name === watches[currentCard].case.name &&
+          watches[i].band.name === watches[currentCard].band.name &&
           watches[i].size.name === selectedSize.name
         ) {
           initialIndex = i;
@@ -157,7 +90,10 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
           galleryRef.current.clientWidth / 2 +
           initialCard.offsetWidth / 2;
 
-        galleryRef.current.scrollLeft = centerOffset;
+        galleryRef.current.scrollTo({
+          left: centerOffset,
+          behavior: "smooth",
+        });
       }
 
       galleryRef.current.addEventListener("scroll", handleScroll);
@@ -170,18 +106,14 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sizes]);
+  }, [watches]);
 
   useEffect(() => {
-    const band = sizes[currentCard].bands.find(
-      (b) => b.name === selectedBand.name
+    onSelect(
+      watches[currentCard].size,
+      watches[currentCard].band,
+      watches[currentCard].case
     );
-    const caseName = sizes[currentCard].cases.find(
-      (c) => c.name === selectedCase.name
-    );
-    if (band && caseName) {
-      onSelect(sizes[currentCard], band, caseName);
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentCard]);
 

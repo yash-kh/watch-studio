@@ -2,7 +2,13 @@
 
 import WatchCarousel from "@/components/WatchCarousel/WatchCarousel";
 import SizeCarousel from "@/components/SizeCarousel/SizeCarousel";
-import { staticData, watchItem, watchSeries, watchSize } from "@/modals/watch";
+import {
+  staticData,
+  watch,
+  watchItem,
+  watchSeries,
+  watchSize,
+} from "@/modals/watch";
 import { useState } from "react";
 import ButtonList from "@/components/ButtonList/ButtonList";
 import Dropdown from "@/components/Dropdown/Dropdown";
@@ -21,6 +27,13 @@ export default function Home() {
   const [cases, setCases] = useState<watchItem[]>(series[0].sizes[1].cases);
   const [selectedCase, setSelectedCase] = useState<watchItem>(cases[0]);
   const [selectedBand, setSelectedBand] = useState<watchItem>(bands[0]);
+  const [watchList, setWatchList] = useState<watch[]>([
+    {
+      case: selectedCase,
+      band: selectedBand,
+      size: selectedSize,
+    },
+  ]);
 
   function selectSize(size: watchSize, band?: watchItem, caze?: watchItem) {
     setSelectedSize(size);
@@ -74,6 +87,10 @@ export default function Home() {
     }
   }
 
+  function removeLeadingNumbers(input: string): string {
+    return input.replace(/^\d+/, "");
+  }
+
   const variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
@@ -104,10 +121,8 @@ export default function Home() {
             transition={{ duration: 0.5 }}
           >
             <SizeCarousel
-              sizes={[selectedSeries.sizes[1] || selectedSeries.sizes[0]]}
+              watches={watchList}
               selectedSize={selectedSize}
-              selectedCase={selectedCase || cases[0]}
-              selectedBand={selectedBand || bands[0]}
               onSelect={selectSize}
             />
           </motion.div>
@@ -122,10 +137,8 @@ export default function Home() {
             transition={{ duration: 0.5 }}
           >
             <SizeCarousel
-              sizes={selectedSeries.sizes}
+              watches={watchList}
               selectedSize={selectedSize}
-              selectedCase={selectedCase || cases[0]}
-              selectedBand={selectedBand || bands[0]}
               onSelect={selectSize}
             />
           </motion.div>
@@ -192,6 +205,21 @@ export default function Home() {
         <div className="flex gap-4 my-16 overflow-x-auto max-w-full hide-scroll-bar">
           <span
             onClick={() => {
+              const watches: watch[] = [];
+              const bandName = removeLeadingNumbers(selectedBand.name);
+              const caseName = removeLeadingNumbers(selectedCase.name);
+              selectedSeries.sizes.forEach((size) => {
+                const band = size.bands.find(
+                  (b) => removeLeadingNumbers(b.name) === bandName
+                );
+                const casze = size.cases.find(
+                  (c) => removeLeadingNumbers(c.name) === caseName
+                );
+                if (band && casze) {
+                  watches.push({ case: casze, band: band, size: size });
+                }
+              });
+              setWatchList(watches);
               setView("Size");
             }}
           >
