@@ -146,10 +146,7 @@ const WatchCarousel: React.FC<WatchCarouselProps> = ({
       transition={{ duration: 1 }}
     >
       <div className="gallery" ref={galleryRef}>
-        <ul className="cards" style={{
-          paddingTop: staticInFront ? "0px" : "6px",
-          paddingBottom: staticInFront ? "0px" : "6px",
-        }}>
+        <ul className="cards">
           {items.map((item, i) => (
             <li
               key={i}
@@ -158,9 +155,6 @@ const WatchCarousel: React.FC<WatchCarouselProps> = ({
               }}
               onClick={() => handleCardClick(i)}
               className="cursor-pointer"
-              style={{
-                height: staticInFront ? "450px" : "438px",
-              }}
             >
               <Image
                 src={item.imageUrl}
@@ -182,7 +176,7 @@ const WatchCarousel: React.FC<WatchCarouselProps> = ({
         <Image
           src={staticItem.imageUrl}
           alt={staticItem.name}
-          width={staticInFront ? 438 : 450}
+          width={450}
           height={500}
         />
       </div>
