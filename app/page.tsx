@@ -38,6 +38,42 @@ export default function Home() {
     }
   }
 
+  function bandTypeChange(type: string) {
+    const s = series.find((s) => s.name === selectedSeries.name);
+    if (s) {
+      const size = s.sizes.find((s) => s.name === selectedSize.name);
+      if (size) {
+        const band = size.bands.find((b) => b.type === type);
+        if (band) {
+          setSelectedBand(band);
+        }
+      }
+    }
+  }
+
+  function caseTypeChange(type: string) {
+    const s = series.find((s) => s.name === selectedSeries.name);
+    if (s) {
+      const size = s.sizes.find((s) => s.name === selectedSize.name);
+      if (size) {
+        const casee = size.cases.find((c) => c.type === type);
+        if (casee) {
+          setSelectedCase(casee);
+        }
+      }
+    }
+  }
+
+  function watchSizeChange(sizeName: string) {
+    const s = series.find((s) => s.name === selectedSeries.name);
+    if (s) {
+      const size = s.sizes.find((s) => s.name === sizeName);
+      if (size) {
+        selectSize(size);
+      }
+    }
+  }
+
   const variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
@@ -154,7 +190,11 @@ export default function Home() {
       </div>
       <div className="flex justify-center">
         <div className="flex gap-4 my-16 overflow-x-auto max-w-full hide-scroll-bar">
-          <span onClick={() => setView("Size")}>
+          <span
+            onClick={() => {
+              setView("Size");
+            }}
+          >
             <ButtonList
               items={
                 view !== "Size"
@@ -162,6 +202,7 @@ export default function Home() {
                   : selectedSeries.sizes.map((s) => s.name)
               }
               heightLightItem={selectedSize.name}
+              typeChange={watchSizeChange}
             ></ButtonList>
           </span>
           <span onClick={() => setView("Case")}>
@@ -172,6 +213,7 @@ export default function Home() {
                   : [...new Set(cases.map((c) => c.type))]
               }
               heightLightItem={selectedCase.type}
+              typeChange={caseTypeChange}
             ></ButtonList>
           </span>
           <span onClick={() => setView("Band")}>
@@ -182,6 +224,7 @@ export default function Home() {
                   : [...new Set(bands.map((b) => b.type))]
               }
               heightLightItem={selectedBand.type}
+              typeChange={bandTypeChange}
             ></ButtonList>
           </span>
         </div>

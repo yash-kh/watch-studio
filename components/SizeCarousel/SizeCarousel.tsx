@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./SizeCarousel.css";
 import Image from "next/image";
 import { watchItem, watchSize, watch } from "@/modals/watch";
+import debounce from "lodash.debounce";
 
 type CardElement = HTMLLIElement | null;
 type GalleryElement = HTMLDivElement | null;
@@ -59,11 +60,8 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
       setCurrentCard(initialIndex);
       setTimeout(() => {
         handleCardClick(initialIndex);
-      }, 0);
+      }, 1);
     }
-    // console.log(watches);
-    // console.log({case: selectedCase, band: selectedBand, size: selectedSize});
-    // console.log(initialIndex)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -71,27 +69,31 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
     return input.replace(/^\d+/, "");
   }
 
-  const handleScroll = () => {
-    if (!galleryRef.current) return;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleScroll = useCallback(
+    debounce(() => {
+      if (!galleryRef.current) return;
 
-    const galleryCenter =
-      galleryRef.current.scrollLeft + galleryRef.current.clientWidth / 2;
-    let closestIndex = 0;
-    let closestDistance = Infinity;
+      const galleryCenter =
+        galleryRef.current.scrollLeft + galleryRef.current.clientWidth / 2;
+      let closestIndex = 0;
+      let closestDistance = Infinity;
 
-    cardsRef.current.forEach((card, index) => {
-      if (!card) return;
-      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-      const distance = Math.abs(galleryCenter - cardCenter);
+      cardsRef.current.forEach((card, index) => {
+        if (!card) return;
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        const distance = Math.abs(galleryCenter - cardCenter);
 
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestIndex = index;
-      }
-    });
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
 
-    setCurrentCard(closestIndex);
-  };
+      setCurrentCard(closestIndex);
+    }, 200),
+    []
+  );
 
   const handleCardClick = (index: number) => {
     const selectedCard = cardsRef.current[index];
@@ -108,6 +110,28 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
       setCurrentCard(index);
     }
   };
+
+  // useEffect(() => {
+  //   const index = watches.findIndex(
+  //     (watch) => watch.size.name === selectedSize.name
+  //   );
+  //   console.log(index);
+  //   if (index !== -1) {
+  //     if (galleryRef.current) {
+  //     const initialCard = cardsRef.current[index];
+  //     if (initialCard) {
+  //       const centerOffset =
+  //         initialCard.offsetLeft -
+  //         galleryRef.current.clientWidth / 2 +
+  //         initialCard.offsetWidth / 2;
+  //       galleryRef.current.scrollTo({
+  //         left: centerOffset,
+  //         behavior: "smooth",
+  //       });
+  //     }
+  //   }
+  //   }
+  // }, [selectedSize]);
 
   useEffect(() => {
     if (galleryRef.current) {
@@ -149,7 +173,6 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
   }, [sizes]);
 
   useEffect(() => {
-    // const sizeName = sizes[currentCard].name;
     const band = sizes[currentCard].bands.find(
       (b) => b.name === selectedBand.name
     );
@@ -159,7 +182,8 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
     if (band && caseName) {
       onSelect(sizes[currentCard], band, caseName);
     }
-  }, [currentCard, onSelect, sizes, selectedBand, selectedCase]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentCard]);
 
   const handlePrev = () => {
     if (currentCard > 0) {

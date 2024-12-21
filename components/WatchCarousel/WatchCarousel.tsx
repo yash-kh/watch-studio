@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./WatchCarousel.css";
 import Image from "next/image";
 import { watchItem } from "@/modals/watch";
+import debounce from "lodash.debounce";
 
 type Item = watchItem;
 
@@ -31,27 +32,31 @@ const WatchCarousel: React.FC<WatchCarouselProps> = ({
     items.indexOf(initialSelectedItem)
   );
 
-  const handleScroll = () => {
-    if (!galleryRef.current) return;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleScroll = useCallback(
+    debounce(() => {
+      if (!galleryRef.current) return;
 
-    const galleryCenter =
-      galleryRef.current.scrollLeft + galleryRef.current.clientWidth / 2;
-    let closestIndex = 0;
-    let closestDistance = Infinity;
+      const galleryCenter =
+        galleryRef.current.scrollLeft + galleryRef.current.clientWidth / 2;
+      let closestIndex = 0;
+      let closestDistance = Infinity;
 
-    cardsRef.current.forEach((card, index) => {
-      if (!card) return;
-      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-      const distance = Math.abs(galleryCenter - cardCenter);
+      cardsRef.current.forEach((card, index) => {
+        if (!card) return;
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        const distance = Math.abs(galleryCenter - cardCenter);
 
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestIndex = index;
-      }
-    });
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
 
-    setCurrentCard(closestIndex);
-  };
+      setCurrentCard(closestIndex);
+    }, 200),
+    []
+  );
 
   const handleCardClick = (index: number) => {
     const selectedCard = cardsRef.current[index];
@@ -98,6 +103,24 @@ const WatchCarousel: React.FC<WatchCarouselProps> = ({
   useEffect(() => {
     onSelect(items[currentCard]);
   }, [currentCard, onSelect, items]);
+
+  useEffect(() => {
+    const index = items.indexOf(initialSelectedItem);
+    setCurrentCard(index);
+    if (galleryRef.current) {
+      const initialCard = cardsRef.current[index];
+      if (initialCard) {
+        const centerOffset =
+          initialCard.offsetLeft -
+          galleryRef.current.clientWidth / 2 +
+          initialCard.offsetWidth / 2;
+        galleryRef.current.scrollTo({
+          left: centerOffset,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [initialSelectedItem, items]);
 
   const handlePrev = () => {
     if (currentCard > 0) {

@@ -4,9 +4,10 @@ import { motion, AnimatePresence } from "framer-motion";
 interface ButtonListProps {
   items: string[];
   heightLightItem: string;
+  typeChange: (type: string) => void;
 }
 
-const ButtonList: React.FC<ButtonListProps> = ({ items, heightLightItem }) => {
+const ButtonList: React.FC<ButtonListProps> = ({ items, heightLightItem, typeChange }) => {
   return (
     <motion.div
       className="button button-elevated gap-2 bg-[#e8e8ed] p-1 rounded-full flex"
@@ -18,6 +19,7 @@ const ButtonList: React.FC<ButtonListProps> = ({ items, heightLightItem }) => {
           <motion.button
             key={index}
             className={"flex items-center gap-2 px-4 py-2 text-gray-800 hover:bg-gray-200 transition rounded-md " + (item === heightLightItem ? " font-bold" : "")}
+            onClick={() => typeChange(item)}
           >
             {item === "Size" && (
               <svg
