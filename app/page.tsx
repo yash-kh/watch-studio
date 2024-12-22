@@ -14,6 +14,7 @@ import ButtonList from "@/components/ButtonList/ButtonList";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
+import Loader from "@/components/Loader/Loader";
 
 const useIsTabletOrSmaller = () => {
   const isClient = typeof window !== "undefined";
@@ -126,6 +127,42 @@ export default function Home() {
   function removeLeadingNumbers(input: string): string {
     return input.replace(/^\d+/, "");
   }
+
+  const loadAssets = async (toView: string) => {
+    setView("loading");
+
+    const promiseArr: Promise<void>[] = [];
+
+    if (toView === "Case") {
+      cases.forEach((b) => {
+        const tempPromise = new Promise<void>((resolve) => {
+          const img = new window.Image();
+          img.src = b.imageUrl;
+          img.onload = () => resolve();
+          img.onerror = () => resolve();
+        });
+        promiseArr.push(tempPromise);
+      });
+    }
+
+    if (toView === "Band") {
+      bands.forEach((b) => {
+        const tempPromise = new Promise<void>((resolve) => {
+          const img = new window.Image();
+          img.src = b.imageUrl;
+          img.onload = () => resolve();
+          img.onerror = () => resolve();
+        });
+        promiseArr.push(tempPromise);
+      });
+    }
+
+    // Load all assets
+    await Promise.all(promiseArr);
+
+    // Set the view after loading
+    setView(toView);
+  };
 
   const variants = {
     hidden: { opacity: 0 },
@@ -274,6 +311,17 @@ export default function Home() {
               />
             </motion.div>
           )}
+          {view === "loading" && (
+            <motion.div
+              key="loading"
+            >
+              <div className="gallery-wrapper">
+                <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                  <Loader />
+                </span>
+              </div>
+            </motion.div>
+          )}
         </AnimatePresence>
       </motion.div>
       {!isGetStarted && (
@@ -333,7 +381,7 @@ export default function Home() {
                 typeChange={watchSizeChange}
               ></ButtonList>
             </span>
-            <span onClick={() => setView("Case")}>
+            <span onClick={() => loadAssets("Case")}>
               <ButtonList
                 items={
                   view !== "Case"
@@ -344,7 +392,7 @@ export default function Home() {
                 typeChange={caseTypeChange}
               ></ButtonList>
             </span>
-            <span onClick={() => setView("Band")}>
+            <span onClick={() => loadAssets("Band")}>
               <ButtonList
                 items={
                   view !== "Band"
