@@ -16,9 +16,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 
 const useIsTabletOrSmaller = () => {
-  const [isTabletOrSmaller, setIsTabletOrSmaller] = useState(
-    window.innerWidth <= 768
-  );
+  const [isTabletOrSmaller, setIsTabletOrSmaller] = useState(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 768px)");
