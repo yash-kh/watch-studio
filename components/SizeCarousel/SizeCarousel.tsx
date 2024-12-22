@@ -158,17 +158,52 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+    switch (e.key) {
+      case 'ArrowLeft':
+        e.preventDefault();
+        if (currentCard > 0) handlePrev();
+        break;
+      case 'ArrowRight':
+        e.preventDefault();
+        if (currentCard < watches.length - 1) handleNext();
+        break;
+      case 'Enter':
+      case ' ':
+        e.preventDefault();
+        handleCardClick(index);
+        break;
+    }
+  };
+
   return (
-    <div className="gallery-wrapper">
-      <div className="gallery hide-scroll-bar" ref={galleryRef}>
-        <ul className="cards">
+    <div 
+      className="gallery-wrapper"
+      role="region"
+      aria-label="Watch size selection carousel"
+    >
+      <div 
+        className="gallery hide-scroll-bar" 
+        ref={galleryRef}
+        aria-live="polite"
+      >
+        <ul 
+          className="cards"
+          role="listbox"
+          aria-label="Available watch sizes"
+          aria-orientation="horizontal"
+        >
           {watches.map((item, i) => (
             <li
               key={i}
               ref={(el) => {
                 cardsRef.current[i] = el;
               }}
+              role="option"
+              aria-selected={currentCard === i}
+              tabIndex={currentCard === i ? 0 : -1}
               onClick={() => handleCardClick(i)}
+              onKeyDown={(e) => handleKeyDown(e, i)}
               className="cursor-pointer"
               style={{
                 width: isTabletOrSmaller ? "230px" : "300px",
@@ -203,6 +238,7 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
         <button
           className="prev bg-[#e8e8ed] p-1 rounded-full absolute top-1/2 left-2 z-50 transform -translate-y-1/2"
           onClick={handlePrev}
+          aria-label="Previous watch size"
         >
           <svg
             className="w-6 h-6"
@@ -218,6 +254,7 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
         <button
           className="next bg-[#e8e8ed] p-1 rounded-full absolute top-1/2 right-2 z-50 transform -translate-y-1/2"
           onClick={handleNext}
+          aria-label="Next watch size"
         >
           <svg
             className="w-6 h-6"
