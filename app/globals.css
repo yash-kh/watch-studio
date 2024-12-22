@@ -92,7 +92,7 @@
     --sk-button-min-width-basis: 70px;
     --sk-button-margin-horizontal: 18px;
     --sk-button-margin-vertical: 18px;
-    font-family: SF Pro Text,SF Pro Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-family: SF Pro Text, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
     font-size: 17px;
     font-weight: 400;
     letter-spacing: -.022em;
@@ -101,7 +101,7 @@
 
 .as-designstudio-intro-collectionname {
     color: #1d1d1f;
-    font-family: SF Pro Display,SF Pro Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-family: SF Pro Display, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
     font-size: 21px;
     font-weight: 400;
     letter-spacing: .011em;
@@ -110,9 +110,19 @@
 }
 
 .typography-headline-elevated {
-    font-family: SF Pro Display,SF Pro Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-family: SF Pro Display, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
     font-size: 55px;
     font-weight: 600;
     letter-spacing: -.009em;
     line-height: 1.0625;
+}
+
+@media only screen and (max-width: 1023px) and (max-device-width: 736px) {
+    .typography-headline-elevated {
+        font-family: SF Pro Display, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 40px;
+        font-weight: 600;
+        letter-spacing: 0;
+        line-height: 1.1;
+    }
 }

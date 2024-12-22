@@ -251,10 +251,13 @@ export default function Home() {
         </span>
       </div>
       <motion.div
-        initial={{ scale: isTabletOrSmaller ? 1.25 : 2, translateY: 550 }}
+        initial={{
+          scale: isTabletOrSmaller ? 1.25 : 2,
+          translateY: isTabletOrSmaller ? 400 : 500,
+        }}
         animate={{
           scale: isScaled ? (isTabletOrSmaller ? 1.25 : 2) : 1,
-          translateY: isScaled ? 550 : 0,
+          translateY: isScaled ? (isTabletOrSmaller ? 400 : 500) : 0,
         }}
         transition={{ duration: 1, ease: "easeInOut" }}
       >
