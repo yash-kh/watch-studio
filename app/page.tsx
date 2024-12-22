@@ -128,7 +128,7 @@ export default function Home() {
     return input.replace(/^\d+/, "");
   }
 
-  const loadAssets = async (toView: string) => {
+  const loadAssets = async (toView: string, watches?: watch[]) => {
     setView("loading");
 
     const promiseArr: Promise<void>[] = [];
@@ -154,6 +154,25 @@ export default function Home() {
           img.onerror = () => resolve();
         });
         promiseArr.push(tempPromise);
+      });
+    }
+
+    if (toView === "Watch") {
+      watches?.forEach((w) => {
+        const tempPromise = new Promise<void>((resolve) => {
+          const img = new window.Image();
+          img.src = w.band.imageUrl;
+          img.onload = () => resolve();
+          img.onerror = () => resolve();
+        });
+        const tempPromise1 = new Promise<void>((resolve) => {
+          const img = new window.Image();
+          img.src = w.case.imageUrl;
+          img.onload = () => resolve();
+          img.onerror = () => resolve();
+        });
+        promiseArr.push(tempPromise);
+        promiseArr.push(tempPromise1);
       });
     }
 
@@ -312,9 +331,7 @@ export default function Home() {
             </motion.div>
           )}
           {view === "loading" && (
-            <motion.div
-              key="loading"
-            >
+            <motion.div key="loading">
               <div className="gallery-wrapper">
                 <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                   <Loader />
@@ -368,7 +385,7 @@ export default function Home() {
                   }
                 });
                 setWatchList(watches);
-                setView("Size");
+                loadAssets("Size", watches);
               }}
             >
               <ButtonList
