@@ -206,7 +206,7 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
               onKeyDown={(e) => handleKeyDown(e, i)}
               className="cursor-pointer"
               style={{
-                width: isTabletOrSmaller ? "230px" : "300px",
+                width: isTabletOrSmaller ? "14.375rem" : "18.75rem",
               }}
             >
               <Image
@@ -215,8 +215,8 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
                 width={500}
                 height={500}
                 style={{
-                  width: isTabletOrSmaller ? "350px" : "450px",
-                  height: isTabletOrSmaller ? "350px" : "450px",
+                  width: isTabletOrSmaller ? "21.875rem" : "28.125rem",
+                  height: isTabletOrSmaller ? "21.875rem" : "28.125rem",
                 }}
               />
               <Image
@@ -225,8 +225,8 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
                 width={500}
                 height={500}
                 style={{
-                  width: isTabletOrSmaller ? "350px" : "450px",
-                  height: isTabletOrSmaller ? "350px" : "450px",
+                  width: isTabletOrSmaller ? "21.875rem" : "28.125rem",
+                  height: isTabletOrSmaller ? "21.875rem" : "28.125rem",
                 }}
               />
             </li>

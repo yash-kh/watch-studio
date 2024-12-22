@@ -31,6 +31,7 @@ export default function Home() {
   const [cases, setCases] = useState<watchItem[]>(series[0].sizes[1].cases);
   const [selectedCase, setSelectedCase] = useState<watchItem>(cases[0]);
   const [selectedBand, setSelectedBand] = useState<watchItem>(bands[0]);
+  const [sizeScroll, setSizeScroll] = useState<string[]>(["Size"]);
   const [watchList, setWatchList] = useState<watch[]>([
     {
       case: selectedCase,
@@ -163,6 +164,17 @@ export default function Home() {
     setView(toView);
   };
 
+  function onGetStarted() {
+    setIsScaled(false);
+    setIsGetStarted(false);
+    setTimeout(() => {
+      setSizeScroll(selectedSeries.sizes.map((s) => s.name));
+      setTimeout(() => {
+        setSizeScroll(["Size"]);
+      }, 1000);
+    }, 1200);
+  }
+
   const variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
@@ -180,7 +192,7 @@ export default function Home() {
             exit="exit"
             variants={variants}
             transition={{ duration: 0.7 }}
-            className="absolute top-36 left-1/4 transform -translate-x-1/4 z-100"
+            className="absolute top-36 left-1/4 transform -translate-x-1/4 z-50"
           >
             <h1
               className="rf-designstudio-headline typography-headline-elevated"
@@ -203,10 +215,7 @@ export default function Home() {
             </h1>
             <button
               className="px-4 py-2 typography-body bg-[#0071e3] text-white rounded-2xl mt-7"
-              onClick={() => {
-                setIsScaled(false);
-                setIsGetStarted(false);
-              }}
+              onClick={onGetStarted}
             >
               get started
             </button>
@@ -379,7 +388,7 @@ export default function Home() {
               <ButtonList
                 items={
                   view !== "Size"
-                    ? ["Size"]
+                    ? sizeScroll
                     : selectedSeries.sizes.map((s) => s.name)
                 }
                 heightLightItem={selectedSize.name}
