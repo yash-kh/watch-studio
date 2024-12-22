@@ -113,13 +113,19 @@ export default function Home() {
     setView("loading");
 
     const promiseArr: Promise<void>[] = [];
+    const imageCache: HTMLImageElement[] = [];
 
     if (toView === "Case") {
       cases.forEach((b) => {
         const tempPromise = new Promise<void>((resolve) => {
           const img = new window.Image();
           img.src = b.imageUrl;
-          img.onload = () => resolve();
+          img.style.display = "none";
+          img.onload = () => {
+            document.body.appendChild(img);
+            imageCache.push(img);
+            resolve();
+          };
           img.onerror = () => resolve();
         });
         promiseArr.push(tempPromise);
@@ -131,7 +137,12 @@ export default function Home() {
         const tempPromise = new Promise<void>((resolve) => {
           const img = new window.Image();
           img.src = b.imageUrl;
-          img.onload = () => resolve();
+          img.style.display = "none";
+          img.onload = () => {
+            document.body.appendChild(img);
+            imageCache.push(img);
+            resolve();
+          };
           img.onerror = () => resolve();
         });
         promiseArr.push(tempPromise);
@@ -143,13 +154,23 @@ export default function Home() {
         const tempPromise = new Promise<void>((resolve) => {
           const img = new window.Image();
           img.src = w.band.imageUrl;
-          img.onload = () => resolve();
+          img.style.display = "none";
+          img.onload = () => {
+            document.body.appendChild(img);
+            imageCache.push(img);
+            resolve();
+          };
           img.onerror = () => resolve();
         });
         const tempPromise1 = new Promise<void>((resolve) => {
           const img = new window.Image();
           img.src = w.case.imageUrl;
-          img.onload = () => resolve();
+          img.style.display = "none";
+          img.onload = () => {
+            document.body.appendChild(img);
+            imageCache.push(img);
+            resolve();
+          };
           img.onerror = () => resolve();
         });
         promiseArr.push(tempPromise);
@@ -162,6 +183,15 @@ export default function Home() {
 
     // Set the view after loading
     setView(toView);
+
+    // Clean up hidden images after a delay to ensure they're cached
+    setTimeout(() => {
+      imageCache.forEach((img) => {
+        if (img.parentNode) {
+          img.parentNode.removeChild(img);
+        }
+      });
+    }, 5000);
   };
 
   function onGetStarted() {
