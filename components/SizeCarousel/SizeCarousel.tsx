@@ -5,6 +5,7 @@ import "./SizeCarousel.css";
 import Image from "next/image";
 import { watchItem, watchSize, watch } from "@/modals/watch";
 import debounce from "lodash.debounce";
+import { useIsTabletOrSmaller } from "@/utils/view";
 
 type CardElement = HTMLLIElement | null;
 type GalleryElement = HTMLDivElement | null;
@@ -23,6 +24,8 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
   const cardsRef = useRef<CardElement[]>([]);
   const galleryRef = useRef<GalleryElement>(null);
   const [currentCard, setCurrentCard] = useState<number>(0);
+
+  const isTabletOrSmaller = useIsTabletOrSmaller();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleScroll = useCallback(
@@ -167,18 +170,29 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
               }}
               onClick={() => handleCardClick(i)}
               className="cursor-pointer"
+              style={{
+                width: isTabletOrSmaller ? "230px" : "300px",
+              }}
             >
               <Image
                 src={item.band.imageUrl}
                 alt={item.band.name}
                 width={500}
                 height={500}
+                style={{
+                  width: isTabletOrSmaller ? "350px" : "450px",
+                  height: isTabletOrSmaller ? "350px" : "450px",
+                }}
               />
               <Image
                 src={item.case.imageUrl}
                 alt={item.case.name}
                 width={500}
                 height={500}
+                style={{
+                  width: isTabletOrSmaller ? "350px" : "450px",
+                  height: isTabletOrSmaller ? "350px" : "450px",
+                }}
               />
             </li>
           ))}

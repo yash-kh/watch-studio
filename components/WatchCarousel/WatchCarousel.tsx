@@ -5,6 +5,7 @@ import "./WatchCarousel.css";
 import Image from "next/image";
 import { watchItem } from "@/modals/watch";
 import debounce from "lodash.debounce";
+import { useIsTabletOrSmaller } from "@/utils/view";
 
 type Item = watchItem;
 
@@ -31,6 +32,8 @@ const WatchCarousel: React.FC<WatchCarouselProps> = ({
   const [currentCard, setCurrentCard] = useState<number>(
     items.indexOf(initialSelectedItem)
   );
+
+  const isTabletOrSmaller = useIsTabletOrSmaller();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleScroll = useCallback(
@@ -172,12 +175,19 @@ const WatchCarousel: React.FC<WatchCarouselProps> = ({
               }}
               onClick={() => handleCardClick(i)}
               className="cursor-pointer"
+              style={{
+                width: isTabletOrSmaller ? "230px" : "300px",
+              }}
             >
               <Image
                 src={item.imageUrl}
                 alt={item.name}
                 width={500}
                 height={500}
+                style={{
+                  width: isTabletOrSmaller ? "350px" : "450px",
+                  height: isTabletOrSmaller ? "350px" : "450px",
+                }}
               />
             </li>
           ))}
@@ -193,7 +203,7 @@ const WatchCarousel: React.FC<WatchCarouselProps> = ({
         <Image
           src={staticItem.imageUrl}
           alt={staticItem.name}
-          width={450}
+          width={isTabletOrSmaller ? 350 : 450}
           height={500}
         />
       </div>

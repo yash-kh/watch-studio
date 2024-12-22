@@ -9,33 +9,13 @@ import {
   watchSeries,
   watchSize,
 } from "@/modals/watch";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ButtonList from "@/components/ButtonList/ButtonList";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import Loader from "@/components/Loader/Loader";
-
-const useIsTabletOrSmaller = () => {
-  const isClient = typeof window !== "undefined";
-  const initial = isClient ? window.innerWidth <= 768 : false;
-
-  const [isTabletOrSmaller, setIsTabletOrSmaller] = useState(initial);
-
-  useEffect(() => {
-    if (!isClient) return;
-
-    const mediaQuery = window.matchMedia("(max-width: 768px)");
-    const handleResize = () => setIsTabletOrSmaller(mediaQuery.matches);
-
-    handleResize();
-
-    mediaQuery.addEventListener("change", handleResize);
-    return () => mediaQuery.removeEventListener("change", handleResize);
-  }, [isClient]);
-
-  return isTabletOrSmaller;
-};
+import { useIsTabletOrSmaller } from "@/utils/view";
 
 const series = staticData;
 
@@ -254,9 +234,9 @@ export default function Home() {
         </span>
       </div>
       <motion.div
-        initial={{ scale: isTabletOrSmaller ? 1.5 : 2, translateY: 550 }}
+        initial={{ scale: isTabletOrSmaller ? 1.25 : 2, translateY: 550 }}
         animate={{
-          scale: isScaled ? (isTabletOrSmaller ? 1.5 : 2) : 1,
+          scale: isScaled ? (isTabletOrSmaller ? 1.25 : 2) : 1,
           translateY: isScaled ? 550 : 0,
         }}
         transition={{ duration: 1, ease: "easeInOut" }}
@@ -367,7 +347,7 @@ export default function Home() {
       )}
       {!isGetStarted && (
         <div className="flex justify-center">
-          <div className="flex gap-4 my-16 overflow-x-auto max-w-full hide-scroll-bar">
+          <div className="flex gap-4 my-16 overflow-x-auto max-w-full hide-scroll-bar px-3">
             <span
               onClick={() => {
                 const watches: watch[] = [];
