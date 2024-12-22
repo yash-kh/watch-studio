@@ -217,6 +217,11 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
                 style={{
                   width: isTabletOrSmaller ? "21.875rem" : "28.125rem",
                   height: isTabletOrSmaller ? "21.875rem" : "28.125rem",
+                  transition: "opacity 100ms ease-in",
+                  opacity: 0
+                }}
+                onLoadingComplete={(img) => {
+                  img.style.opacity = "1";
                 }}
               />
               <Image
@@ -227,6 +232,11 @@ const SizeCarousel: React.FC<SizeCarouselProps> = ({
                 style={{
                   width: isTabletOrSmaller ? "21.875rem" : "28.125rem",
                   height: isTabletOrSmaller ? "21.875rem" : "28.125rem",
+                  transition: "opacity 100ms ease-in",
+                  opacity: 0
+                }}
+                onLoadingComplete={(img) => {
+                  img.style.opacity = "1";
                 }}
               />
             </li>
