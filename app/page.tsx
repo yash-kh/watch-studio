@@ -179,7 +179,7 @@ export default function Home() {
             animate="visible"
             exit="exit"
             variants={variants}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.7 }}
             className="absolute top-36 left-1/4 transform -translate-x-1/4 z-100"
           >
             <h1
@@ -257,7 +257,7 @@ export default function Home() {
               animate="visible"
               exit="exit"
               variants={variants}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.7 }}
             >
               <SizeCarousel
                 watches={watchList}
@@ -273,7 +273,7 @@ export default function Home() {
               animate="visible"
               exit="exit"
               variants={variants}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.7 }}
             >
               <SizeCarousel
                 watches={watchList}
@@ -289,7 +289,7 @@ export default function Home() {
               animate="visible"
               exit="exit"
               variants={variants}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.7 }}
             >
               <WatchCarousel
                 items={bands}
@@ -307,7 +307,7 @@ export default function Home() {
               animate="visible"
               exit="exit"
               variants={variants}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.7 }}
             >
               <WatchCarousel
                 items={cases}
