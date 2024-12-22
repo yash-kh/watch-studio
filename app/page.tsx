@@ -15,7 +15,7 @@ import Dropdown from "@/components/Dropdown/Dropdown";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import Loader from "@/components/Loader/Loader";
-import { useIsTabletOrSmaller } from "@/utils/view";
+import { overlayAndDownloadImages, useIsTabletOrSmaller } from "@/utils/view";
 
 const series = staticData;
 
@@ -227,7 +227,15 @@ export default function Home() {
         </span>
         <span className="px-[1.375rem] py-[1.375rem] w-40">
           {!isGetStarted && (
-            <button className="button float-end px-4 py-2 typography-body bg-[#0071e3] text-white rounded-2xl">
+            <button
+              className="button float-end px-4 py-2 typography-body bg-[#0071e3] text-white rounded-2xl"
+              onClick={() =>
+                overlayAndDownloadImages(
+                  selectedBand.imageUrl,
+                  selectedCase.imageUrl
+                )
+              }
+            >
               Save
             </button>
           )}
