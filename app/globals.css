@@ -98,3 +98,21 @@
     letter-spacing: -.022em;
     line-height: 1.1764805882;
 }
+
+.as-designstudio-intro-collectionname {
+    color: #1d1d1f;
+    font-family: SF Pro Display,SF Pro Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-size: 21px;
+    font-weight: 400;
+    letter-spacing: .011em;
+    line-height: 1.381002381;
+    padding-bottom: 10px;
+}
+
+.typography-headline-elevated {
+    font-family: SF Pro Display,SF Pro Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-size: 55px;
+    font-weight: 600;
+    letter-spacing: -.009em;
+    line-height: 1.0625;
+}
