@@ -222,7 +222,7 @@ export default function Home() {
             exit="exit"
             variants={variants}
             transition={{ duration: 0.7 }}
-            className="absolute top-36 left-1/4 transform -translate-x-1/4 z-50"
+            className="absolute md:w-[720px] w-[90%] top-36 left-1/2 -translate-x-1/2 transform z-50"
           >
             <h1
               className="rf-designstudio-headline typography-headline-elevated"
@@ -247,7 +247,7 @@ export default function Home() {
               className="px-4 py-2 typography-body bg-[#0071e3] text-white rounded-2xl mt-7"
               onClick={onGetStarted}
             >
-              get started
+              Get started
             </button>
           </motion.div>
         )}
@@ -283,11 +283,11 @@ export default function Home() {
       <motion.div
         initial={{
           scale: isTabletOrSmaller ? 1.25 : 2,
-          translateY: isTabletOrSmaller ? 400 : 500,
+          translateY: isTabletOrSmaller ? 400 : 550,
         }}
         animate={{
           scale: isScaled ? (isTabletOrSmaller ? 1.25 : 2) : 1,
-          translateY: isScaled ? (isTabletOrSmaller ? 400 : 500) : 0,
+          translateY: isScaled ? (isTabletOrSmaller ? 400 : 550) : 0,
         }}
         transition={{ duration: 1, ease: "easeInOut" }}
       >
